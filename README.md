@@ -7,3 +7,4 @@ I intend to create a beautifully designed website that will be my portfolio
 - Use Go for the backend
 - Use a JavaScript framework specifically for static pages on the frontend
 - Do not use a database -- this will be strictly static!
+- Output to a single binary -- pack the static assets into the binary as well
