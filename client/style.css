@@ -6,8 +6,30 @@
 
 .sidebar {
   grid-column: 2 / 3;
+
+  display: grid;
 }
 
 .main {
   grid-column: 3 / 3;
+}
+
+.avatar-container {
+  grid-column: 1 / 2;
+}
+
+.name-container {
+  grid-column: 2 / 2;
+}
+
+.social-container {
+  grid-column: 1;
+}
+
+.about-me-container {
+  grid-column: 1;
+}
+
+.contact-me-container {
+  grid-column: 1;
 }
