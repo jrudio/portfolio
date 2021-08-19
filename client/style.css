@@ -55,3 +55,7 @@ body {
   font-style: italic;
   font-size: 0.8rem;
 }
+
+.project-card-container > ul > li {
+  margin-bottom: 0.7em;
+}
