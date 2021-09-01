@@ -21,9 +21,9 @@ a {
 
 .container {
   display: grid;
-  grid-template-columns: auto 480px 850px auto;
+  grid-template-columns: auto 580px 850px auto;
   grid-template-rows: 100vh;
-  column-gap: 1.6em;
+  column-gap: 100px;
 }
 
 .sidebar {
@@ -41,7 +41,7 @@ a {
 .avatar-container {
   display: grid;
   grid-row: 1 / 5;
-  grid-template-columns: 150px 150px;
+  grid-template-columns: 113px 150px;
   gap: 1em;
 }
 
@@ -61,6 +61,8 @@ a {
 
 .about-me-container {
   grid-row: 4 / 5;
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 
 .contact-me-container {
@@ -81,5 +83,6 @@ a {
 }
 
 .project-card-container > ul > li {
+  line-height: 1.3em;
   margin-bottom: 0.3em;
 }
