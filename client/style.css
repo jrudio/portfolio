@@ -1,7 +1,22 @@
+/* color pallette: https://coolors.co/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529 */
+
+:root {
+  --color-bg: #E9ECEF;
+  --text-color: #495057;
+  --link-color: #343A40;
+  --subtext-color: #6C757D;
+}
+
 body {
+  background-color: var(--color-bg);
+  color: var(--text-color);
   font-family: 'Roboto', sans-serif;
   margin-top: 60px;
   overflow-y: hidden;
+}
+
+a {
+  color: var(--link-color);
 }
 
 .container {
@@ -30,6 +45,11 @@ body {
   gap: 1em;
 }
 
+.info-container {
+  display: grid;
+  grid-template-rows: 60px 30px;
+}
+
 .job-title {
   font-weight: 100px;
   font-size: 0.8rem;
@@ -54,11 +74,12 @@ body {
 }
 
 .project-title-tech {
+  color: var(--subtext-color);
   font-weight: 100;
   font-style: italic;
   font-size: 0.8rem;
 }
 
 .project-card-container > ul > li {
-  margin-bottom: 0.7em;
+  margin-bottom: 0.3em;
 }
