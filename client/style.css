@@ -5,13 +5,15 @@
   --text-color: #495057;
   --link-color: #343A40;
   --subtext-color: #6C757D;
+  --secondary-color: #ADB5BD;
+  --card-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --panel-padding: 1.2em;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--text-color);
   font-family: 'Roboto', sans-serif;
-  margin-top: 60px;
   overflow-y: hidden;
 }
 
@@ -27,15 +29,26 @@ a {
 }
 
 .sidebar {
+  background-color: var(--secondary-color);
+  box-shadow: var(--card-shadow);
   grid-column: 2 / 3;
+  /* overflow-y: scroll; */
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: var(--panel-padding);
 }
 
 .main {
+  background-color: var(--secondary-color);
   grid-column: 3 / 3;
   display: grid;
   grid-template-columns: repeat(3, 1.5fr);
   gap: 1.5em;
   overflow-y: scroll;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: var(--panel-padding);
+  box-shadow: var(--card-shadow);
 }
 
 .avatar-container {
@@ -65,8 +78,10 @@ a {
   line-height: 1.2em;
 }
 
-.contact-me-container {
-  grid-row: 5 / 5;
+.divider {
+  border-top: 1px solid #DEE2E6;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 /* project card styles */
@@ -85,4 +100,8 @@ a {
 .project-card-container > ul > li {
   line-height: 1.3em;
   margin-bottom: 0.3em;
+}
+
+.project-card-container > img, .project-card-container > a > img {
+  box-shadow: var(--card-shadow);
 }
