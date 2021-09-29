@@ -58,6 +58,10 @@ a {
   gap: 1em;
 }
 
+.avatar-container > img {
+  border-radius: 15%;
+}
+
 .info-container {
   display: grid;
   grid-template-rows: 60px 30px;
