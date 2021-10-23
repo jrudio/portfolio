@@ -12,6 +12,7 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@main
         with:
           credentials: ${{ secrets.gcp_credentials }}
-          path: ./client
+          path: client
           destination: jrudio-portfolio-assets
+          parent: false
           gzip: false
