@@ -18,6 +18,14 @@ I plan on creating a startup script for the VM to provision the server for requi
 - Caddy (for serving static files, https goodness, logs, etc)
 - Utilize Github Actions for CI/CD
 
+To execute terraform code:
+
+```
+GCLOUD_PROJECT=<project-id>
+ GOOGLE_CREDENTIALS=<path-to-service-account-json>
+ TF_VAR_startup_script_url=<startup-script-url> terraform apply
+```
+
 For restarts:
 
 - Make sure we run caddy with the proper arguments and Caddyfile
