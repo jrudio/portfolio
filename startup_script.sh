@@ -1,6 +1,6 @@
 caddy_endpoint=localhost:2019
 caddy_file_remote=https://raw.githubusercontent.com/jrudio/portfolio/main/Caddyfile
-caddy_certs_path=$caddy_cert_path
+caddy_bucket="gs://${caddy_bucket}"
 
 # download caddy if doesn't exist
 if [ ! -f /usr/local/bin/caddy ] && [ ! -f /usr/bin/caddy ]; then
@@ -34,7 +34,7 @@ fi
 if [ ! -f /etc/caddy/certs/caddy.crt ] && [ ! -f /etc/caddy/certs/caddy.key ]; then
     echo "adding certificates to caddy..."
     mkdir -p /etc/caddy/certs
-    gsutil cp $caddy_certs_path/caddy.crt /etc/caddy/certs/caddy.crt
+    gsutil cp $caddy_bucket/caddy.crt /etc/caddy/certs/caddy.crt
 
     # check again
     if [ ! -f /etc/caddy/certs/caddy.crt ] && [ ! -f /etc/caddy/certs/caddy.key ]; then
