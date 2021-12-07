@@ -21,10 +21,15 @@ I plan on creating a startup script for the VM to provision the server for requi
 To execute terraform code:
 
 ```
-GCLOUD_PROJECT=<project-id>
- GOOGLE_CREDENTIALS=<path-to-service-account-json>
- TF_VAR_startup_script_url=<startup-script-url> terraform apply
+GCLOUD_PROJECT=<project-id> GOOGLE_CREDENTIALS=<path-to-service-account-json> terraform apply
 ```
+
+Service account must have the following IAM permissions:
+
+- Compute Admin (create VM)
+- Service Account Admin (creates a service account)
+- Service Account User (uses created service account on VM)
+- Storage Admin (create bucket)
 
 For restarts:
 

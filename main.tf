@@ -12,12 +12,25 @@ provider "google" {
   zone = "us-west1-b"
 }
 
-resource "google_storage_bucket" "portfolio-caddy-assets" {
+resource "google_service_account" "portfolio_service_account" {
+  account_id = "portfolio-caddy-id-01"
+  display_name = "portfolio caddy service account"
+}
+
+resource "google_storage_bucket" "portfolio_caddy_assets" {
   name = "portfolio-caddy-assets"
   location = "us-west1"
   versioning {
     enabled = true
   }
+}
+
+data "local_file" "portfolio_startup_script" {
+  filename = "${path.module}/startup_script.sh"
+}
+
+data "local_file" "caddy_file" {
+  filename = "${path.module}/Caddyfile"
 }
 
 resource "google_compute_instance" "portfolio-server" {
@@ -31,6 +44,8 @@ resource "google_compute_instance" "portfolio-server" {
     }
   }
 
+  tags = [ "default-allow-http", "default-allow-https" ]
+
   network_interface {
     network = "default"
 
@@ -38,5 +53,11 @@ resource "google_compute_instance" "portfolio-server" {
     }
   }
 
-  metadata_startup_script = "wget ${var.startup_script_url} && chmod +x startup_script.sh && caddy_cert_path=${google_storage_bucket.portfolio-caddy-assets.self_link} ./startup_script.sh"
+  # caddy_bucket is used for any existing certificates
+  metadata_startup_script = "caddy_bucket=${resource.google_storage_bucket.portfolio_caddy_assets.name}; caddy_Caddyfile=${data.local_file.caddy_file.content}; ${data.local_file.portfolio_startup_script.content}"
+
+  service_account {
+    email = resource.google_service_account.portfolio_service_account.email
+    scopes = [ "storage-full" ]
+  }
 }
