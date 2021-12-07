@@ -15,6 +15,16 @@ provider "google" {
 resource "google_service_account" "portfolio_service_account" {
   account_id = "portfolio-caddy-id-01"
   display_name = "portfolio caddy service account"
+  description = "service account for ${resource.google_compute_instance.portfolio-server} instance"
+}
+
+data "google_iam_policy" "portfolio_iam_policy" {
+  binding {
+    role               = "roles/storage.objectViewer"
+    members = [
+      "serviceAccount:${google_service_account.portfolio_service_account.email}",
+    ]
+  }
 }
 
 resource "google_storage_bucket" "portfolio_caddy_assets" {
@@ -23,6 +33,8 @@ resource "google_storage_bucket" "portfolio_caddy_assets" {
   versioning {
     enabled = true
   }
+
+  force_destroy = true
 }
 
 data "local_file" "portfolio_startup_script" {
@@ -54,7 +66,7 @@ resource "google_compute_instance" "portfolio-server" {
   }
 
   # caddy_bucket is used for any existing certificates
-  metadata_startup_script = "caddy_bucket=${resource.google_storage_bucket.portfolio_caddy_assets.name}; caddy_Caddyfile=${data.local_file.caddy_file.content}; ${data.local_file.portfolio_startup_script.content}"
+  metadata_startup_script = "caddy_bucket=${resource.google_storage_bucket.portfolio_caddy_assets.url}; caddy_Caddyfile=${data.local_file.caddy_file.content}; ${data.local_file.portfolio_startup_script.content}"
 
   service_account {
     email = resource.google_service_account.portfolio_service_account.email

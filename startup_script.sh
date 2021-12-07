@@ -1,5 +1,4 @@
 caddy_endpoint=localhost:2019
-caddy_bucket="gs://${caddy_bucket}"
 
 # add Caddyfile to directory
 if [ ! -f /etc/caddy/Caddyfile ]; then
@@ -28,7 +27,7 @@ fi
 if [ ! -f /etc/caddy/certs/caddy.crt ] && [ ! -f /etc/caddy/certs/caddy.key ]; then
     echo "adding certificates to caddy..."
     mkdir -p /etc/caddy/certs
-    gsutil cp $caddy_bucket/caddy.crt /etc/caddy/certs/caddy.crt
+    gsutil cp -r $caddy_bucket /etc/caddy/certs
 
     # check again
     if [ ! -f /etc/caddy/certs/caddy.crt ] && [ ! -f /etc/caddy/certs/caddy.key ]; then
@@ -49,9 +48,8 @@ if [ ! -f /usr/local/bin/caddy ] && [ ! -f /usr/bin/caddy ]; then
     sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
     curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo tee /etc/apt/trusted.gpg.d/caddy-stable.asc
     curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-    sudo apt update
 
-    # this auto-runs caddy
+    sudo apt update
     sudo apt install caddy
 fi
 
@@ -61,6 +59,11 @@ caddy_response=$(curl --write-out %{http_code} --connect-timeout 3 --silent --ou
 
 if [ $caddy_response -ne 200 ] && [ $caddy_response -ne 404 ]; then
     echo "caddy is not running"
+
+    echo "starting caddy..."
+
+    caddy start -config /etc/caddy/Caddyfile
+
     exit 1
 else
     echo "caddy is running..."
